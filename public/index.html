@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101513">
+  <title>CodeSync</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="CodeSync home">
+      <span class="brand-mark">C</span><span>CodeSync</span>
+    </a>
+    <div class="header-context"><span>Workspace</span><span class="crumb-divider">/</span><strong id="header-workspace-name">Starter workspace</strong></div>
+    <div class="topbar-right">
+      <span id="collaborators" class="collaborators">1 here</span>
+      <span id="connection" class="connection"><i></i><span>Connecting</span></span>
+      <span class="top-avatar" id="active-user" title="Active account">U</span>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <section class="sidebar-workspace">
+        <div class="sidebar-label">Workspace</div>
+        <div class="workspace-picker">
+          <label class="sr-only" for="workspace-select">Select workspace</label>
+          <select id="workspace-select" aria-label="Workspace"></select>
+          <button id="new-workspace" class="icon-button" type="button" aria-label="New workspace" title="New workspace">+</button>
+        </div>
+        <div class="workspace-sync" hidden><span class="sync-mark"></span><span id="save-state" class="save-state">Saved</span><span id="workspace-version" class="version-label">v1</span></div>
+      </section>
+
+      <nav class="view-tabs" aria-label="Main views">
+        <button class="view-tab active" data-view="editor" type="button"><span class="nav-glyph">&gt;_</span>Editor</button>
+        <button class="view-tab" data-view="leaderboard" type="button"><span class="nav-glyph">#</span>Leaderboard</button>
+      </nav>
+
+      <div class="sidebar-rule"></div>
+      <section class="sidebar-info">
+        <div class="sidebar-label">Session</div>
+        <div class="session-row"><span>Language</span><span id="sidebar-language">Python 3</span></div>
+        <div class="session-row"><span>Challenge</span><span id="sidebar-problem">Two Sum</span></div>
+      </section>
+      <div class="sidebar-footer">
+        <label class="sidebar-label" for="user">Working as</label>
+        <select id="user" aria-label="Submit as"></select>
+        <div class="sidebar-foot-note">Changes save to this browser while offline.</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section id="editor-view" class="view">
+        <div class="page-heading">
+          <div><div class="eyebrow">COLLABORATIVE EDITOR</div><h1 id="workspace-heading">Starter workspace</h1></div>
+          <div class="heading-meta"><span id="heading-save-state" class="heading-save"><i></i><span>Saved</span></span><span class="heading-version" id="heading-version">v1</span></div>
+        </div>
+
+        <div id="conflict" class="conflict" hidden>
+          <div><strong>Another edit was saved first.</strong><span>Your draft is stored locally.</span></div>
+          <div class="conflict-actions"><button id="reload-latest" class="quiet-button" type="button">Reload latest</button><button id="overwrite" class="primary-button small" type="button">Overwrite</button></div>
+        </div>
+
+        <div class="editor-toolbar">
+          <div class="toolbar-controls">
+            <div class="control-field"><label for="language">Language</label><select id="language"><option value="cpp">C++17</option><option value="python">Python 3</option></select></div>
+            <span class="toolbar-divider"></span>
+            <div class="control-field challenge-control"><label for="problem">Challenge</label><select id="problem"></select></div>
+          </div>
+          <button id="run" class="primary-button" type="button"><span class="run-symbol" aria-hidden="true"></span>Run code</button>
+        </div>
+
+        <div class="workbench">
+          <section class="editor-pane" aria-label="Code editor">
+            <div class="pane-heading"><div class="file-tab"><span class="file-dot"></span><span id="file-name">main.py</span></div><span class="pane-hint">UTF-8 <span>|</span> Spaces: 4</span></div>
+            <div class="editor-frame">
+              <div id="line-numbers" class="line-numbers" aria-hidden="true">1</div>
+              <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Source code"></textarea>
+            </div>
+            <footer class="editor-status"><span id="editor-position">Ln 1, Col 1</span><span id="character-count">0 chars</span><span id="editor-language">Python 3</span></footer>
+          </section>
+
+          <aside class="side-pane">
+            <div class="side-tabs" role="tablist" aria-label="Challenge and output">
+              <button id="problem-tab" class="side-tab active" type="button" role="tab" aria-selected="true" data-panel="problem-panel">Challenge</button>
+              <button id="output-tab" class="side-tab" type="button" role="tab" aria-selected="false" data-panel="output-panel">Output <span id="run-status" class="status-badge idle">Ready</span></button>
+            </div>
+            <section id="problem-panel" class="side-panel" role="tabpanel">
+              <div class="problem-heading"><div><div class="eyebrow">PROBLEM</div><h2 id="problem-title">Two Sum</h2></div><span id="limit-badge" class="limit-badge">2s</span></div>
+              <p id="problem-description">Read n, then n integers and a target. Print the two zero-based indices of a pair that sums to the target.</p>
+              <div class="statement-divider"></div>
+              <div class="statement-label">Input format</div>
+              <p class="statement-note">Input and output are read from standard streams.</p>
+              <div class="statement-label sample-label">Sample input</div>
+              <pre id="sample-input" class="sample-block">4
+2 7 11 15
+9</pre>
+              <div class="statement-label sample-label">Expected output</div>
+              <pre id="sample-output" class="sample-block compact">0 1</pre>
+            </section>
+            <section id="output-panel" class="side-panel output-panel" role="tabpanel" hidden>
+              <div class="output-heading"><span>Execution result</span><span id="output-time" class="output-time"></span></div>
+              <pre id="output" aria-live="polite">Run your code to see the verdict.</pre>
+              <div class="output-footnote">Verdicts include hidden test cases.</div>
+            </section>
+          </aside>
+        </div>
+
+        <section class="submissions-pane">
+          <div class="section-heading"><div><div class="eyebrow">ACTIVITY</div><h2>Recent submissions</h2></div><button id="more-submissions" class="quiet-button" type="button" hidden>Load more</button></div>
+          <div class="table-wrap"><table><thead><tr><th>VERDICT</th><th>CHALLENGE</th><th>LANGUAGE</th><th>TIME</th><th>SUBMITTED</th></tr></thead><tbody id="submission-rows"></tbody></table><div id="empty-submissions" class="empty-state">Submissions will appear here after your first run.</div></div>
+        </section>
+      </section>
+
+      <section id="leaderboard-view" class="view" hidden>
+        <div class="leaderboard-heading"><div><div class="eyebrow">COMMUNITY</div><h1>Leaderboard</h1><p>Ranked by accepted problems, then execution time.</p></div><button id="refresh-leaderboard" class="quiet-button" type="button">Refresh</button></div>
+        <div class="leaderboard-summary"><div><span class="summary-label">RANKING</span><strong>By department</strong></div><span class="summary-dot"></span><div><span class="summary-label">SCORING</span><strong>Problems solved, then time</strong></div></div>
+        <div class="table-wrap leaderboard-table"><table><thead><tr><th>RANK</th><th>DEVELOPER</th><th>DEPARTMENT</th><th>PROBLEMS SOLVED</th><th>TOTAL TIME</th></tr></thead><tbody id="leaderboard-rows"></tbody></table><div id="empty-leaderboard" class="empty-state" hidden>No leaderboard entries yet.</div></div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
